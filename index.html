@@ -184,7 +184,7 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Correo</th>
                     <th scope="col">Laboratorio</th>
-<!--                    <th scope="col">Fecha</th>-->
+                    <th scope="col">Fecha</th>
                     <th scope="col">Hora</th>
                 </tr>
                 </thead>
@@ -194,7 +194,7 @@
                     <td>{{reserva.nombre}}</td>
                     <td>{{reserva.correo}}</td>
                     <td>{{reserva.laboratorio}}</td>
-<!--                    <td>{{reserva.fecha}}</td>-->
+                    <td>{{reserva.fecha}}</td>
                     <td>{{reserva.hora}}</td>
                 </tr>
                 </tbody>
@@ -247,10 +247,10 @@
                         </div>
 
                         <!-- Fecha -->
-<!--                        <div class="mb-3">-->
-<!--                            <label for="fecha" class="form-label">Fecha</label>-->
-<!--                            <input class="form-control" id="fecha" v-model="nuevo.fecha" type="text" readonly>-->
-<!--                        </div>-->
+                        <div class="mb-3">
+                            <label for="fecha" class="form-label">Fecha</label>
+                            <input class="form-control" id="fecha" v-model="nuevo.fecha" type="text" readonly>
+                        </div>
                         <!-- Hora -->
                         <div class="mb-3">
                             <label for="hora" class="form-label">Hora</label>
@@ -293,7 +293,7 @@
                     id: '',
                     nombre: '',
                     laboratorio: '',
-                   // fecha: '',
+                   fecha: '',
                   hora: '',
                    // idEstudiante: '',
                     correo: ''
@@ -350,7 +350,7 @@
                 this.nuevo.id = '';
                 this.nuevo.nombre = '';
                 this.nuevo.laboratorio = '';
-              //  this.nuevo.fecha = '';
+              this.nuevo.fecha = '';
                this.nuevo.hora = '';
                 this.nuevo.correo = '';
                // this.nuevo.idEstudiante = '';
@@ -378,22 +378,22 @@
 
     app.mount('#app');
 
-    // flatpickr('#fecha', {
-    //     dateFormat: 'Y-m-d',
-    //     minDate: 'today',
-    //     disable: [
-    //         function(date) {
-    //             // Deshabilita los fines de semana
-    //             return (date.getDay() === 0 || date.getDay() === 6);
-    //         }
-    //     ],
-    //     onChange: function(selectedDates, dateStr, instance) {
-    //         // Actualiza el modelo de Vue con la fecha seleccionada
-    //         if (app.nuevo) {
-    //             app.nuevo.fecha = dateStr;
-    //         }
-    //     }
-    // });
+    flatpickr('#fecha', {
+        dateFormat: 'Y-m-d',
+        minDate: 'today',
+        disable: [
+            function(date) {
+                // Deshabilita los fines de semana
+                return (date.getDay() === 0 || date.getDay() === 6);
+            }
+        ],
+        onChange: function(selectedDates, dateStr, instance) {
+            // Actualiza el modelo de Vue con la fecha seleccionada
+            if (app.nuevo) {
+                app.nuevo.fecha = dateStr;
+            }
+        }
+    });
 
 
     flatpickr("#hora", {
