@@ -185,7 +185,7 @@
                     <th scope="col">Correo</th>
                     <th scope="col">Laboratorio</th>
 <!--                    <th scope="col">Fecha</th>-->
-<!--                    <th scope="col">Hora</th>-->
+                    <th scope="col">Hora</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -195,7 +195,7 @@
                     <td>{{reserva.correo}}</td>
                     <td>{{reserva.laboratorio}}</td>
 <!--                    <td>{{reserva.fecha}}</td>-->
-<!--                    <td>{{reserva.hora}}</td>-->
+                    <td>{{reserva.hora}}</td>
                 </tr>
                 </tbody>
             </table>
@@ -252,13 +252,12 @@
 <!--                            <input class="form-control" id="fecha" v-model="nuevo.fecha" type="text" readonly>-->
 <!--                        </div>-->
                         <!-- Hora -->
-<!--                        <div class="mb-3">-->
-<!--                            <label for="hora" class="form-label">Hora</label>-->
-<!--&lt;!&ndash;                            <input class="form-control" id="hora" v-model="nuevo.hora" type="text" required>&ndash;&gt;-->
-<!--                            <input type="time" id="hora" class="form-control" v-model="nuevo.hora" name="hora" style="width: 40%;" required>-->
+                        <div class="mb-3">
+                            <label for="hora" class="form-label">Hora</label>
+<!--                            <input class="form-control" id="hora" v-model="nuevo.hora" type="text" required>-->
+                            <input type="text" id="hora" class="form-control" v-model="nuevo.hora" name="hora" style="width: 40%;" required>
 
-<!--                        </div>-->
-
+                        </div>
 
                         <button type="submit" class="btn btn-primary">Enviar</button>
                         <button type="reset" class="btn btn-danger">Limpiar</button>
@@ -295,7 +294,7 @@
                     nombre: '',
                     laboratorio: '',
                    // fecha: '',
-                  //  hora: '',
+                  hora: '',
                    // idEstudiante: '',
                     correo: ''
                 },
@@ -352,7 +351,7 @@
                 this.nuevo.nombre = '';
                 this.nuevo.laboratorio = '';
               //  this.nuevo.fecha = '';
-               // this.nuevo.hora = '';
+               this.nuevo.hora = '';
                 this.nuevo.correo = '';
                // this.nuevo.idEstudiante = '';
             },
@@ -397,15 +396,15 @@
     // });
 
 
-    // flatpickr("#hora", {
-    //     enableTime: true,
-    //     noCalendar: true,
-    //     dateFormat: "H:i",
-    //     minTime: "8:00",
-    //     maxTime: "21:00",
-    //     defaultDate: "8:00",
-    //     minuteIncrement: 60,
-    // });
+    flatpickr("#hora", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        minTime: "8:00",
+        maxTime: "21:00",
+        defaultDate: "8:00",
+        minuteIncrement: 60,
+    });
 </script>
 
 
