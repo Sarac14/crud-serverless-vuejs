@@ -184,7 +184,7 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Correo</th>
                     <th scope="col">Laboratorio</th>
-                    <th scope="col">Fecha :</th>
+                    <th scope="col">Fecha</th>
                     <th scope="col">Hora</th>
                 </tr>
                 </thead>
@@ -316,6 +316,8 @@
             crearActualizarReserva() {
                 if(!this.editando){
                     //creando
+                    console.log("Fecha en nuevo:", this.nuevo.fecha);
+
                     axios.post(URL_API, this.nuevo).then(response => {
                         this.limpiar();
                         this.listaReservas();
