@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.3/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.3/dist/flatpickr.min.js"></script>
+
+
+    <title>Lista de Reservas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .modal-dialog {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        .registration-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .logo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 20px;
+            width: 100px;
+        }
+
+        button, .registration-form button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover, .registration-form button:hover {
+            background-color: #0056b3;
+        }
+
+        .past-records-link {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 20px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .registration-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        .registration-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .registration-form input[type="text"],
+        .registration-form select,
+        .registration-form .flatpickr-input {
+            width: 95%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .field-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .field-container label {
+            width: 20%; /* Ajusta según sea necesario */
+            margin-right: 10px; /* Espaciado entre la etiqueta y el campo de entrada */
+        }
+
+        .field-container input {
+            width: 80%; /* Ajusta según sea necesario */
+        }
+
+        .datepicker-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="app">
+    <div class="row mt-3">
+        <div class="col-sm">
+            <a href="http://sarablog.me/crud-serverless-vuejs-2/" class="past-records-link btn btn-link">Registros Pasados</a>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/25/EscudoPucmm.gif" alt="Logo PUCMM" class="logo">
+            <h1 class="text-center">Lista de Reservas</h1>
+            <br>
+            <br>
+            <button type="button" class="btn btn-primary" @click="nuevaReserva">Nueva Reserva</button>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-sm">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Laboratorio</th>
+<!--                    <th scope="col">Fecha</th>-->
+<!--                    <th scope="col">Hora</th>-->
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="reserva in reservas">
+                    <td>{{reserva.id}}</td>
+                    <td>{{reserva.nombre}}</td>
+                    <td>{{reserva.correo}}</td>
+                    <td>{{reserva.laboratorio}}</td>
+<!--                    <td>{{reserva.fecha}}</td>-->
+<!--                    <td>{{reserva.hora}}</td>-->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="modal-1" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>{{titulo}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" data-bs-target="#modal-1" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form @submit.prevent="crearActualizarReserva" @reset="limpiar" >
+                        <!-- ID -->
+                        <div class="mb-3">
+                            <label for="id" class="form-label">ID</label>
+                            <input class="form-control" id="id" v-model="nuevo.id" type="number" required placeholder="ID"></input>
+                        </div>
+
+                        <!-- ID ESTUDIANTE -->
+<!--                        <div class="mb-3">-->
+<!--                            <label for="idEstudiante" class="form-label">ID Estudiante</label>-->
+<!--                            <input class="form-control" id="idEstudiante" v-model="nuevo.idEstudiante" type="number"required placeholder="ID Estudiante"></input>-->
+<!--                        </div>-->
+
+                        <!-- Nombre -->
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input class="form-control" id="nombre" v-model="nuevo.nombre" type="text" required placeholder="Nombre"></input>
+                        </div>
+
+                        <!-- Correo -->
+                        <div class="mb-3">
+                            <label for="correo" class="form-label">Correo</label>
+                            <input class="form-control" id="correo" v-model="nuevo.correo" type="text" required placeholder="Nombre"></input>
+                        </div>
+
+                        <!-- Laboratorio -->
+                        <div class="mb-3">
+                            <label for="laboratorio" class="form-label">Laboratorio</label>
+                            <select class="form-select" id="laboratorio" v-model="nuevo.laboratorio" required>
+                                <option value="" disabled selected>Selecciona un laboratorio</option>
+                                <option value="Computación">Computación</option>
+                                <option value="Redes">Redes</option>
+                                <option value="Comunicación">Comunicación</option>
+                            </select>
+                        </div>
+
+                        <!-- Fecha -->
+<!--                        <div class="mb-3">-->
+<!--                            <label for="fecha" class="form-label">Fecha</label>-->
+<!--                            <input class="form-control" id="fecha" v-model="nuevo.fecha" type="text" readonly>-->
+<!--                        </div>-->
+                        <!-- Hora -->
+<!--                        <div class="mb-3">-->
+<!--                            <label for="hora" class="form-label">Hora</label>-->
+<!--&lt;!&ndash;                            <input class="form-control" id="hora" v-model="nuevo.hora" type="text" required>&ndash;&gt;-->
+<!--                            <input type="time" id="hora" class="form-control" v-model="nuevo.hora" name="hora" style="width: 40%;" required>-->
+
+<!--                        </div>-->
+
+
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                        <button type="reset" class="btn btn-danger">Limpiar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+
+
+
+<script>
+
+    const NOMBRE_KEY = "API_URL";
+    if (localStorage.getItem(NOMBRE_KEY) == null) {
+        localStorage.setItem(NOMBRE_KEY, "/api/reserva/")
+    }
+    const URL_API = localStorage.getItem(NOMBRE_KEY);
+
+    const { createApp } = Vue;
+
+    const app = createApp({
+        data() {
+            return {
+                titulo: "Creación de Reserva",
+                editando: false,
+                nuevo: {
+                    id: '',
+                    nombre: '',
+                    laboratorio: '',
+                   // fecha: '',
+                  //  hora: '',
+                   // idEstudiante: '',
+                    correo: ''
+                },
+                reservas: [],
+                modal: null,
+            };
+        },
+        methods: {
+
+            nuevaReserva() {
+                console.log("Nueva Reserva");
+                this.titulo = "Nueva Reserva";
+                this.editando = false;
+                this.limpiar();
+                this.modal.show();
+            },
+
+
+            crearActualizarReserva() {
+                if(!this.editando){
+                    //creando
+                    axios.post(URL_API, this.nuevo).then(response => {
+                        this.limpiar();
+                        this.listaReservas();
+                    }).catch(error => console.log(error));
+                } else {
+                    // Actualizar reserva existente
+                    axios.put(URL_API + this.nuevo.id, this.nuevo).then(response => {
+                        this.limpiar();
+                        this.listaReservas();
+                    }).catch(error => console.log(error));
+                }
+                this.modal.hide();
+            },
+
+            editarReserva(reserva) {
+                console.log("La reserva seleccionada para actualizar: ", reserva);
+                this.titulo = "Editando Reserva - " + reserva.id;
+                this.nuevo = Object.assign({}, reserva); // Copiando el objeto, evitando el cambio directo en el formulario.
+                this.editando = true;
+                this.modal.show();
+            },
+            // eliminarReserva(reserva) {
+            //     const confirmed = confirm("¿Desea elminiar el estudiante: "+estudiante.matricula+"?");
+            //     if(confirmed) {
+            //         console.log("Eliminando la matricula: ", estudiante);
+            //         axios.delete(URL_API, {data: estudiante}).then(response => {
+            //             this.listaEstudiantes();
+            //         }).catch(error => console.log(error));
+            //     }
+            // },
+            limpiar() {
+                this.nuevo.id = '';
+                this.nuevo.nombre = '';
+                this.nuevo.laboratorio = '';
+              //  this.nuevo.fecha = '';
+               // this.nuevo.hora = '';
+                this.nuevo.correo = '';
+               // this.nuevo.idEstudiante = '';
+            },
+            listaReservas() {
+                console.log("Cargando lista de Estudiante");
+                axios.get(URL_API).then(response => {
+                    //
+                    console.log("Recuperando información del servidor");
+                    //console.log("respuesta: "+JSON.stringify(response));
+                    //
+                    this.reservas = response.data.data.estudiantes;
+                }).catch(error => { console.log(error); });
+            },
+        },
+        mounted() {
+            console.log("Iniciando la aplicación en mounted: " + this.titulo);
+            this.$nextTick(() => {
+                console.log("Cargando todo el render del proyecto");
+                this.listaReservas();
+                this.modal = new bootstrap.Modal(document.getElementById('modal-1'));
+            });
+        },
+    });
+
+    app.mount('#app');
+
+    // flatpickr('#fecha', {
+    //     dateFormat: 'Y-m-d',
+    //     minDate: 'today',
+    //     disable: [
+    //         function(date) {
+    //             // Deshabilita los fines de semana
+    //             return (date.getDay() === 0 || date.getDay() === 6);
+    //         }
+    //     ],
+    //     onChange: function(selectedDates, dateStr, instance) {
+    //         // Actualiza el modelo de Vue con la fecha seleccionada
+    //         if (app.nuevo) {
+    //             app.nuevo.fecha = dateStr;
+    //         }
+    //     }
+    // });
+
+
+    // flatpickr("#hora", {
+    //     enableTime: true,
+    //     noCalendar: true,
+    //     dateFormat: "H:i",
+    //     minTime: "8:00",
+    //     maxTime: "21:00",
+    //     defaultDate: "8:00",
+    //     minuteIncrement: 60,
+    // });
+</script>
+
+
+</body>
+</html>
